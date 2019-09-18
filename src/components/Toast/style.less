@@ -1,0 +1,71 @@
+.toast-component {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  /* svg 图标样式 */
+  .icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+  /* toast 动画样式 start */
+  .toast-enter {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  .toast-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 300ms ease-out;
+  }
+  .toast-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast-exit-active {
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: all 300ms ease-out;
+  }
+  /* toast 动画样式 end */
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px auto;
+    margin-bottom: 0;
+    padding: 12px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+  }
+  .content > span {
+    margin-left: 8px;
+    font-size: 13px;
+  }
+  .content > svg {
+    font-size: 18px;
+  }
+
+  .content.info > svg {
+    color: #1890FF;
+  }
+
+  .content.success > svg {
+    color: #52C41A;
+  }
+
+  .content.warning > svg {
+    color: #FAAD14;
+  }
+
+  .content.error > svg {
+    color: #F74A53;
+  }
+}
