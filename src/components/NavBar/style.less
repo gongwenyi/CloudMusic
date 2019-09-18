@@ -1,0 +1,26 @@
+@import './../../config/style.less';
+
+.navbar-component {
+  height: 45px;
+  padding: 0 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: @themeColor;
+  .item {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    span {
+      font-size: 14px;
+      color: @tcfff;
+    }
+    &.selected {
+      span {
+        font-size: 16px;
+        border-bottom: 2px solid #fff;
+      }
+    }
+  }
+}
