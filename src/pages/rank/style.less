@@ -1,0 +1,85 @@
+@import './../../config/style.less';
+
+.rank-page {
+  .title {
+    margin-top: 15px;
+    padding-left: 15px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .list-01 {
+    .item-01 {
+      display: flex;
+      flex-direction: row;
+      padding: 10px 15px;
+      border-bottom: 1px solid @borderColor;
+    }
+    .item-left {
+      width: 31%;
+      max-width: 120px;
+    }
+    .box {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 100%;
+      border-radius: 5px;
+      overflow: hidden;
+      background-color: #f7f7f7;
+      .image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .desc {
+        position: absolute;
+        left: 5px;
+        bottom: 5px;
+        color: #fff;
+      }
+    }
+    .item-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 10px;
+      .tracks {
+        font-size: 14px;
+        color: @tc333;
+        padding: 5px 0;
+      }
+    }
+  }
+  .list-02 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 15px;
+    .item-02 {
+      width: 31%;
+      margin-bottom: 10px;
+    }
+    .box {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 100%;
+      border-radius: 5px;
+      overflow: hidden;
+      background-color: #f7f7f7;
+      .image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .desc {
+        position: absolute;
+        left: 5px;
+        bottom: 5px;
+        color: #fff;
+      }
+    }
+  }
+}
