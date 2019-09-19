@@ -11,9 +11,9 @@ const RankDetail = (props) => {
 
   const [id] = useState(props.match.params.id);
   const [playlist, setPlaylist] = useState([]);
-  const [fixed, setFixed] = useState(false);
 
   const headerEl = useRef(null);
+  const titleEl = useRef(null);
   const playEl = useRef(null);
 
   useEffect(() => {
@@ -34,23 +34,25 @@ const RankDetail = (props) => {
   }, [id]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
 
     const handleScroll = (event) => {
       const scrollTop = (event.srcElement ? event.srcElement.documentElement.scrollTop : false) || window.pageYOffset || (event.srcElement ? event.srcElement.body.scrollTop : 0);
-      if (scrollTop < 200) {
-        headerEl.current.style.opacity = scrollTop / 200;
-      } else if (scrollTop > 200) {
+      const playElOffsetTop = playEl.current.offsetTop; // 播放全部按钮距离屏幕顶部距离
+      if (scrollTop < playElOffsetTop) {
+        headerEl.current.style.opacity = scrollTop / playElOffsetTop;
+      } else if (scrollTop > playElOffsetTop) {
         headerEl.current.style.opacity = 1;
       }
   
-      // if (scrollTop + 50 > playEl.current.offsetTop) {
-      //   setFixed(true);
-      // } else {
-      //   setFixed(false);
-      // }
+      if (scrollTop > 100) {
+        titleEl.current.style.opacity = 1;
+      } else {
+        titleEl.current.style.opacity = 0;
+      }
       
     }
+    window.addEventListener('scroll', handleScroll);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     }
@@ -79,12 +81,12 @@ const RankDetail = (props) => {
         <div className="background">
           <img className="image" src={playlist.creator.backgroundUrl}/>
         </div>
+        <div ref={headerEl} className="header opacity">
+          <img className="image" src={playlist.creator.backgroundUrl}/>
+        </div>
         <div className="header">
           <IconFont onClick={goBack} style={{padding: '15px'}} name="iconarrowleft" size="24" color="#fff"/>
-        </div>
-        <div ref={headerEl} className="header opacity">
-          <IconFont onClick={goBack} style={{padding: '15px'}} name="iconarrowleft" size="24" color="#fff"/>
-          <p className="title">{playlist.name}</p>
+          <p ref={titleEl} className="title">{playlist.name}</p>
         </div>
         <div className="content">
           <div className="left">
@@ -101,14 +103,14 @@ const RankDetail = (props) => {
           <FooterItem name="icondownload" text="下载" />
           <FooterItem name="iconellipsis" text="更多" />
         </div>
-      </div>
-      <div className="list">
-        <div ref={playEl} className={`list-header ${fixed ? 'fixed' : ''}`}>
+        <div ref={playEl} className="play-all">
           <div className="play">
             <IconFont name="iconplay-circle-fill" size="20" color="#666"/>
           </div>
           <p className="info">播放全部<span>(共{playlist.trackCount}首)</span></p>
         </div>
+      </div>
+      <div className="list">
         {
           playlist.tracks.map((item, index) => <ListItem key={item.id} index={index} data={item} onClick={() => handleItemClick(index)} />)
         }
