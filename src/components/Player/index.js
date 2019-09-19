@@ -26,7 +26,7 @@ const Player = (props) => {
   useEffect(() => {
     const getSongUrl = async () => {
       const data = await API.songUrl(currentId);
-      if (data.code === 200 && data.data) {
+      if (data.code === 200 && data.data && data.data.length) {
         setUrl(data.data[0].url);
         setPlaying(true);
         const timer = setInterval(() => {
@@ -50,7 +50,9 @@ const Player = (props) => {
         }, 1000);
       }
     }
-    getSongUrl();
+    if (currentId !== '') {
+      getSongUrl();
+    }
   }, [currentId]);
 
   // 暂停
