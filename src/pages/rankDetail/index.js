@@ -63,7 +63,7 @@ const RankDetail = (props) => {
     props.history.goBack();
   }
 
-  const handleItemClick = (index = 0) => {
+  const addPlayList = (index = 0) => {
     dispatch({
       type: 'ADD_PLAY_LIST',
       payload: {
@@ -104,15 +104,15 @@ const RankDetail = (props) => {
           <FooterItem name="iconellipsis" text="更多" />
         </div>
         <div ref={playEl} className="play-all">
-          <div className="play">
+          <div className="play" onClick={() => addPlayList()}>
             <IconFont name="iconplay-circle-fill" size="20" color="#666"/>
           </div>
-          <p className="info">播放全部<span>(共{playlist.trackCount}首)</span></p>
+          <p className="info" onClick={() => addPlayList()}>播放全部<span>(共{playlist.trackCount}首)</span></p>
         </div>
       </div>
       <div className="list">
         {
-          playlist.tracks.map((item, index) => <ListItem key={item.id} index={index} data={item} onClick={() => handleItemClick(index)} />)
+          playlist.tracks.map((item, index) => <ListItem key={item.id} index={index} data={item} onClick={() => addPlayList(index)} />)
         }
       </div>
     </div>
