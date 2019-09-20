@@ -71,7 +71,8 @@ function ProgressLine(props) {
       onClick={progressClick}
     >
       <div className="progress" ref={progress} />
-      <div className="progress-btn-wrapper">
+      <div 
+        className="progress-btn-wrapper"
         ref={progressBtn}
         onTouchStart={progressTouchStart}
         onTouchMove={progressTouchMove}

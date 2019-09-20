@@ -6,7 +6,7 @@ import NavBar from './NavBar';
 import PlayCircleControl from './PlayCircleControl';
 import Player from './Player';
 import ProgressCircle from './ProgressCircle';
-import progressLine from './progressLine';
+import ProgressLine from './ProgressLine';
 import Swiper from './Swiper';
 import Toast from './Toast';
 import TopBar from './TopBar';
@@ -22,7 +22,7 @@ export {
   PlayCircleControl,
   Player,
   ProgressCircle,
-  progressLine,
+  ProgressLine,
   Swiper,
   Toast,
   TopBar,

@@ -13,6 +13,7 @@ const reducer = (state, action) => {
   switch(type) {
     case 'ADD_PLAY_LIST': return {  ...state, playlist: payload.playlist, playlistIds: payload.playlistIds, currentIndex: payload.currentIndex }
     case 'PLAY_NEXT': return {  ...state, currentIndex: payload.currentIndex }
+    case 'PLAY_PREV': return {  ...state, currentIndex: payload.currentIndex }
     default: return {...state};
   }
 }

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, useContext, useRef } from 'react';
-import { PlayCircleControl, IconFont } from './../../components';
+import { PlayCircleControl, IconFont, ProgressLine } from './../../components';
 import { AppContext } from './../../reducer';
-import { getSongUserNames } from './../../utils';
+import { getSongUserNames, formatMinute } from './../../utils';
 import API from './../../api';
 import './style.less';
 
@@ -13,6 +13,8 @@ const Player = (props) => {
   const [url, setUrl] = useState(null); // 当前播放歌曲url
   const [playing, setPlaying] = useState(false);  // 播放、暂停状态
   const [percent, setPercent] = useState(0);  // 当前播放进度（0-1）
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
   const [showPlayerPage, setShowPlayerPage] = useState(false);
 
@@ -34,17 +36,16 @@ const Player = (props) => {
             const duration = audioRef.current.duration;
             const currentTime = audioRef.current.currentTime;
             const percent = (currentTime / duration);
+            setCurrentTime(currentTime);
+            setDuration(duration);
             setPercent(percent);
-            if (audioRef.current.ended) {
+            if (audioRef.current.ended) { // 当前歌曲播放结束
               clearInterval(timer);
               setPlaying(false);
               setPercent(0);
-              dispatch({
-                type: 'PLAY_NEXT',
-                payload: {
-                  currentIndex: currentIndex + 1
-                }
-              })
+              setCurrentTime(0);
+              setDuration(0);
+              onPlayNext(); 
             }
           }
         }, 1000);
@@ -65,6 +66,33 @@ const Player = (props) => {
   const onPlay = () => {
     setPlaying(true);
     audioRef.current.play();
+  }
+
+  // 下一首
+  const onPlayNext = () => {
+    const index = currentIndex < playlistIds.length - 1 ? currentIndex + 1 : 0;
+    dispatch({
+      type: 'PLAY_NEXT',
+      payload: {
+        currentIndex: index
+      }
+    });
+  }
+
+  // 上一首
+  const onPlayPrev = () => {
+    const index = currentIndex === 0 ? playlistIds.length - 1 : currentIndex - 1;
+    dispatch({
+      type: 'PLAY_PREV',
+      payload: {
+        currentIndex: index
+      }
+    });
+  }
+
+  // 进度条拖动或点击可以快进
+  const onPercentChange = (percent) => {
+    audioRef.current.currentTime = percent * duration;
   }
 
   if (!showPlay) return null;
@@ -106,6 +134,26 @@ const Player = (props) => {
           </div>
           <div className="avatar">
             <img src={`${playlist[currentIndex].al.picUrl}?param=500x500`}/>
+          </div>
+          <div className="control">
+            <div className="progress-bar">
+              <span className="time">{formatMinute(currentTime)}</span>
+              <div className="progress-line">
+                <ProgressLine percent={percent} percentChange={(percent) => onPercentChange(percent)}/>
+              </div>
+              <span className="time">{formatMinute(duration)}</span>
+            </div>
+            <div className="control-bar">
+              <IconFont name="iconsync" size="24" color="#fff" onClick={() => {}}/>
+              <IconFont name="iconstep-backward" size="26" color="#fff" onClick={onPlayPrev}/>
+              {
+                playing ?
+                <IconFont name="iconpoweroff-circle-fill" size="48" color="#fff" onClick={onPause}/> :
+                <IconFont name="iconplay-circle-fill" size="48" color="#fff" onClick={onPlay}/>
+              }
+              <IconFont name="iconstep-forward" size="26" color="#fff" onClick={onPlayNext}/>
+              <IconFont name="iconunorderedlist" size="24" color="#fff" onClick={() => {}}/>
+            </div>
           </div>
         </div> 
       }
