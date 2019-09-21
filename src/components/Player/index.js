@@ -1,14 +1,15 @@
 import React, { Fragment, useState, useEffect, useContext, useRef } from 'react';
-import { PlayCircleControl, IconFont, ProgressLine } from './../../components';
+import { CSSTransition } from 'react-transition-group';
+import { PlayCircleControl, IconFont, PlayerPage, PlayerList } from './../../components';
 import { AppContext } from './../../reducer';
-import { getSongUserNames, formatMinute } from './../../utils';
+import { getSongUserNames } from './../../utils';
 import API from './../../api';
 import './style.less';
 
 const Player = (props) => {
   const [state, dispatch] = useContext(AppContext);
   const {playlist, playlistIds, currentIndex} = state;  // 当前播放歌曲列表  当前播放歌曲id列表  当前播放歌曲下标
-  const [showPlay, setShowPlay] = useState(false);  // 是否显示底部播放器
+  const [showPlayer, setShowPlayer] = useState(false);  // 是否显示底部播放器
   const [currentId, setCurrentId] = useState(''); // 当前播放歌曲id
   const [url, setUrl] = useState(null); // 当前播放歌曲url
   const [playing, setPlaying] = useState(false);  // 播放、暂停状态
@@ -16,14 +17,20 @@ const Player = (props) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
-  const [showPlayerPage, setShowPlayerPage] = useState(false);
+  const [showPlayerPage, setShowPlayerPage] = useState(false);  // 是否显示播放器全屏界面
+  const [showPlayerList, setShowPlayerList] = useState(false);  // 是否显示播放器全屏界面
 
   useEffect(() => {
     if (playlist.length) {
-      setShowPlay(true);
+      setShowPlayer(true);
+    }
+  }, [playlist]);
+  
+  useEffect(() => {
+    if (playlistIds.length) {
       setCurrentId(playlistIds[currentIndex].id);
     }
-  }, [playlist, playlistIds, currentIndex]);
+  }, [playlistIds, currentIndex]);
 
   useEffect(() => {
     const getSongUrl = async () => {
@@ -95,68 +102,71 @@ const Player = (props) => {
     audioRef.current.currentTime = percent * duration;
   }
 
-  if (!showPlay) return null;
+  const onPlayIndex = (index) => {
+    dispatch({
+      type: 'PLAY_NEXT',
+      payload: {
+        currentIndex: index
+      }
+    });
+  }
+
+  if (!playlist.length) return null;
   return (
     <Fragment>
-      <div className="player-component">
-        <audio ref={audioRef} className="audio" autoPlay src={url}/>
-        <div className="left" onClick={() => setShowPlayerPage(true)}>
-          <div className="avatar">
-            <img src={`${playlist[currentIndex].al.picUrl}?param=100x100`}/>
-          </div>
-          <div>
-            <p className="song-name">{playlist[currentIndex].name}</p>
-            <p className="song-user">{getSongUserNames(playlist[currentIndex].ar, playlist[currentIndex].al)}</p>
-          </div>
-        </div>
-        <div className="right">
-          <PlayCircleControl
-            percent={percent}
-            playing={playing}
-            onPlay={onPlay}
-            onPause={onPause}
-          />
-          <IconFont name="iconunorderedlist" size="26" color="#666" style={{marginLeft: '15px'}}/>
-        </div>
-      </div>
-      {
-        !!showPlayerPage &&
-        <div className="player-page">
-          <div className="background">
-            <img src={`${playlist[currentIndex].al.picUrl}?param=500x500`}/>
-          </div>
-          <div className="close" onClick={() => setShowPlayerPage(false)}>
-            <IconFont name="icondown" size="26" color="#333"/>
-          </div>
-          <div className="header">
-            <p className="song-name">{playlist[currentIndex].name}</p>
-            <p className="song-user">{getSongUserNames(playlist[currentIndex].ar, playlist[currentIndex].al)}</p>
-          </div>
-          <div className="avatar">
-            <img src={`${playlist[currentIndex].al.picUrl}?param=500x500`}/>
-          </div>
-          <div className="control">
-            <div className="progress-bar">
-              <span className="time">{formatMinute(currentTime)}</span>
-              <div className="progress-line">
-                <ProgressLine percent={percent} percentChange={(percent) => onPercentChange(percent)}/>
-              </div>
-              <span className="time">{formatMinute(duration)}</span>
+      <CSSTransition
+        in={showPlayer}
+        timeout={300}
+        classNames="player-component"
+        unmountOnExit
+      >
+        <div className="player-component">
+          <audio ref={audioRef} className="audio" autoPlay src={url}/>
+          <div className="left" onClick={() => setShowPlayerPage(true)}>
+            <div className="avatar">
+              <img src={`${playlist[currentIndex].al.picUrl}?param=100x100`}/>
             </div>
-            <div className="control-bar">
-              <IconFont name="iconsync" size="24" color="#fff" onClick={() => {}}/>
-              <IconFont name="iconstep-backward" size="26" color="#fff" onClick={onPlayPrev}/>
-              {
-                playing ?
-                <IconFont name="iconpoweroff-circle-fill" size="48" color="#fff" onClick={onPause}/> :
-                <IconFont name="iconplay-circle-fill" size="48" color="#fff" onClick={onPlay}/>
-              }
-              <IconFont name="iconstep-forward" size="26" color="#fff" onClick={onPlayNext}/>
-              <IconFont name="iconunorderedlist" size="24" color="#fff" onClick={() => {}}/>
+            <div>
+              <p className="song-name">{playlist[currentIndex].name}</p>
+              <p className="song-user">{getSongUserNames(playlist[currentIndex].ar, playlist[currentIndex].al)}</p>
             </div>
           </div>
-        </div> 
-      }
+          <div className="right">
+            <PlayCircleControl
+              percent={percent}
+              playing={playing}
+              onPlay={onPlay}
+              onPause={onPause}
+            />
+            <IconFont onClick={() => setShowPlayerList(true)} name="iconunorderedlist" size="26" color="#666" style={{marginLeft: '15px'}}/>
+          </div>
+        </div>
+      </CSSTransition>
+      {/* 播放器全屏界面 */}
+      <PlayerPage
+        show={showPlayerPage}
+        playlist={playlist} 
+        currentIndex={currentIndex}
+        percent={percent}
+        currentTime={currentTime}
+        duration={duration}
+        playing={playing}
+        onHide={() => setShowPlayerPage(false)}
+        onPercentChange={(percent) => onPercentChange(percent)}
+        onPlayPrev={onPlayPrev}
+        onPlayNext={onPlayNext}
+        onPause={onPause}
+        onPlay={onPlay}
+        onShowPlayerList={() => setShowPlayerList(true)}
+      />
+      {/* 播放列表 */}
+      <PlayerList
+        show={showPlayerList}
+        playlist={playlist}
+        currentIndex={currentIndex}
+        onPlayIndex={(index) => onPlayIndex(index)}
+        onHide={() => setShowPlayerList(false)}
+      />
     </Fragment>
   )
 }

@@ -10,7 +10,7 @@ function ProgressLine(props) {
 
   const progressBtnWidth = 30;
 
-  const { percent, percentChange } = props;
+  const { percent, onPercentChange } = props;
 
   useEffect(() => {
     if (percent >= 0 && percent <= 1) {
@@ -31,7 +31,7 @@ function ProgressLine(props) {
     const progressBarWidth = progressBar.current.clientWidth; // 进度条总宽度
     const progresswidth = progress.current.clientWidth; // 当前进度
     const currentPrecent = progresswidth / progressBarWidth;
-    percentChange(currentPrecent)
+    onPercentChange(currentPrecent)
   }
 
   // 进度条点击事件
