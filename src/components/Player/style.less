@@ -19,6 +19,7 @@
   padding: 0 15px;
   background-color: #fff;
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-between;
   &::before {
@@ -47,6 +48,9 @@
         height: 100%;
       }
     }
+    .info {
+      max-width: 2rem;
+    }
     .song-name {
       font-size: 14px;
       color: @tc333;
@@ -58,8 +62,10 @@
     }
   }
   .right {
+    width: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
   }
 }

@@ -126,9 +126,9 @@ const Player = (props) => {
             <div className="avatar">
               <img src={`${playlist[currentIndex].al.picUrl}?param=100x100`}/>
             </div>
-            <div>
-              <p className="song-name">{playlist[currentIndex].name}</p>
-              <p className="song-user">{getSongUserNames(playlist[currentIndex].ar, playlist[currentIndex].al)}</p>
+            <div className="info">
+              <p className="song-name ellipsis">{playlist[currentIndex].name}</p>
+              <p className="song-user ellipsis">{getSongUserNames(playlist[currentIndex].ar, playlist[currentIndex].al)}</p>
             </div>
           </div>
           <div className="right">
