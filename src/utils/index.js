@@ -7,7 +7,9 @@ export const getSongUserNames = (ar, al) => {
       names += `/${ar[i].name}`
     }
   }
-  names += `-${al.name}`;
+  if (al && al.name) {
+    names += `-${al.name}`;
+  }
   return names;
 }
 

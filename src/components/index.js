@@ -5,6 +5,8 @@ import { Alert, Confirm, Prompt } from './Modal';
 import NavBar from './NavBar';
 import PlayCircleControl from './PlayCircleControl';
 import Player from './Player';
+import PlayerPage from './PlayerPage';
+import PlayerList from './PlayerList';
 import ProgressCircle from './ProgressCircle';
 import ProgressLine from './ProgressLine';
 import Swiper from './Swiper';
@@ -21,6 +23,8 @@ export {
   NavBar,
   PlayCircleControl,
   Player,
+  PlayerPage,
+  PlayerList,
   ProgressCircle,
   ProgressLine,
   Swiper,
