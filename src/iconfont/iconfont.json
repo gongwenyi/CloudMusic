@@ -263,6 +263,13 @@
       "font_class": "headset",
       "unicode": "e600",
       "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "10549000",
+      "name": "CTXT_playing",
+      "font_class": "CTXT_playing",
+      "unicode": "e72e",
+      "unicode_decimal": 59182
     }
   ]
 }
