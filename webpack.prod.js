@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const common = require('./webpack.common');
@@ -38,9 +37,6 @@ module.exports = merge(common, {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new UglifyJSPlugin({
-      sourceMap: true
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash:8].css',
     }),
