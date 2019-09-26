@@ -1,32 +1,19 @@
-import React from 'react';
-import { CSSTransition } from 'react-transition-group';
+import React, {Fragment} from 'react';
 import { IconFont, } from '..';
 import { getSongUserNames } from '../../utils';
 import './style.less';
 
 const PlayerList = (props) => {
   const { show, playlist, currentIndex, onHide, onPlayIndex } = props;
-  return (   
-    <div className="player-list" style={{visibility: show ? 'visible' : 'hidden'}}>
-      <CSSTransition
-        in={show}
-        timeout={300}
-        classNames="mask"
-        unmountOnExit
-      >
-        <div className="mask" onClick={onHide}/>
-      </CSSTransition>
-      <CSSTransition
-        in={show}
-        timeout={300}
-        classNames="list"
-        unmountOnExit
-      >
-        <div className="list">
-          { playlist.map((item, index) => <ListItem key={item.id} index={index} data={item} currentIndex={currentIndex} onPlayIndex={() => onPlayIndex(index)} />)}
-        </div>
-      </CSSTransition>
-    </div> 
+
+  return ( 
+
+    <Fragment>
+      <div  className={`player-list-mask ${show ? 'show' : ''}`} onClick={onHide}/>
+      <div  className={`player-list ${show ? 'show' : ''}`}>
+        { playlist.map((item, index) => <ListItem key={item.id} index={index} data={item} currentIndex={currentIndex} onPlayIndex={() => onPlayIndex(index)} />)}
+      </div>
+    </Fragment> 
   )
 }
 
