@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { Loading, Toast, IconFont } from './../../components';
+import { PageContainer, Loading, Toast, IconFont } from './../../components';
 import API from './../../api';
 import { AppContext } from './../../reducer';
 import { getSongUserNames } from './../../utils';
@@ -76,7 +76,7 @@ const RankDetail = (props) => {
 
   if (!playlist.tracks) return null;
   return (
-    <div className="rank-detail-page">
+    <PageContainer className="rank-detail-page">
       <div className="container">
         <div className="background">
           <img className="image" src={playlist.creator.backgroundUrl}/>
@@ -115,7 +115,7 @@ const RankDetail = (props) => {
           playlist.tracks.map((item, index) => <ListItem key={item.id} index={index} data={item} onClick={() => addPlayList(index)} />)
         }
       </div>
-    </div>
+    </PageContainer>
   )
 }
 

@@ -1,6 +1,6 @@
 import React, {lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { TopBar, NavBar, LoadingV2 } from './../../components';
+import { PageContainer, TopBar, NavBar, LoadingV2 } from './../../components';
 import './style.less';
 
 const Recommend = lazy(() => import('./../recommend'));
@@ -13,7 +13,7 @@ const Home = () => {
     <div className="home-page">
       <TopBar/>
       <NavBar/>
-      <div className="content">
+      <PageContainer className="content">
         <Suspense fallback={<LoadingV2 />}>
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/recommend" /> } />
@@ -22,7 +22,7 @@ const Home = () => {
             <Route path="/rank" component={Rank}/>
           </Switch>
         </Suspense>
-      </div>
+      </PageContainer>
     </div>
   )
 }
