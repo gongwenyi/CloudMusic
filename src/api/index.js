@@ -33,6 +33,12 @@ const API = {
     return axios.get('song/url', {
       id
     });
+  },
+  // 获取歌词
+  getLyric(id) {
+    return axios.get('lyric', {
+      id
+    });
   }
 };
 

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, useContext, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group';
 import { PlayCircleControl, IconFont, PlayerPage, PlayerList } from './../../components';
 import { AppContext } from './../../reducer';
-import { getSongUserNames } from './../../utils';
+import { getSongUserNames, formatLyric } from './../../utils';
 import API from './../../api';
 import './style.less';
 
@@ -12,6 +12,7 @@ const Player = (props) => {
   const [showPlayer, setShowPlayer] = useState(false);  // 是否显示底部播放器
   const [currentId, setCurrentId] = useState(''); // 当前播放歌曲id
   const [url, setUrl] = useState(null); // 当前播放歌曲url
+  const [lyric, setLyric] = useState([]); // 当前播放歌曲url
   const [playing, setPlaying] = useState(false);  // 播放、暂停状态
   const [percent, setPercent] = useState(0);  // 当前播放进度（0-1）
   const [currentTime, setCurrentTime] = useState(0);
@@ -38,30 +39,37 @@ const Player = (props) => {
       if (data.code === 200 && data.data && data.data.length) {
         setUrl(data.data[0].url);
         setPlaying(true);
-        const timer = setInterval(() => {
-          if (audioRef.current.readyState === 4) {
-            const duration = audioRef.current.duration;
-            const currentTime = audioRef.current.currentTime;
-            const percent = (currentTime / duration);
-            setCurrentTime(currentTime);
-            setDuration(duration);
-            setPercent(percent);
-            if (audioRef.current.ended) { // 当前歌曲播放结束
-              clearInterval(timer);
-              setPlaying(false);
-              setPercent(0);
-              setCurrentTime(0);
-              setDuration(0);
-              onPlayNext(); 
-            }
-          }
-        }, 1000);
+      }
+    }
+    const getLyric = async () => {
+      const data = await API.getLyric(currentId);
+      if (data.code === 200) {
+        setLyric(formatLyric(data.lrc.lyric));
       }
     }
     if (currentId !== '') {
       getSongUrl();
+      getLyric();
     }
   }, [currentId]);
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current.readyState === 4) {
+      const duration = audioRef.current.duration;
+      const currentTime = audioRef.current.currentTime;
+      const percent = (currentTime / duration);
+      setCurrentTime(currentTime);
+      setDuration(duration);
+      setPercent(percent);
+      if (audioRef.current.ended) { // 当前歌曲播放结束
+        setPlaying(false);
+        setPercent(0);
+        setCurrentTime(0);
+        setDuration(0);
+        onPlayNext(); 
+      }
+    }
+  }
 
   // 暂停
   const onPause = () => {
@@ -121,7 +129,7 @@ const Player = (props) => {
         unmountOnExit
       >
         <div className="player-component">
-          <audio ref={audioRef} className="audio" autoPlay src={url}/>
+          <audio ref={audioRef} className="audio" autoPlay src={url} onTimeUpdate={handleTimeUpdate}/>
           <div className="left" onClick={() => setShowPlayerPage(true)}>
             <div className="avatar">
               <img src={`${playlist[currentIndex].al.picUrl}?param=100x100`}/>
@@ -146,6 +154,7 @@ const Player = (props) => {
       <PlayerPage
         show={showPlayerPage}
         playlist={playlist} 
+        lyric={lyric}
         currentIndex={currentIndex}
         percent={percent}
         currentTime={currentTime}
