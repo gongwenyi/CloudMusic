@@ -6,6 +6,7 @@ import reducer, { AppContext, initial } from './reducer';
 const Home = lazy(() => import('./pages/home'));
 const Album = lazy(() => import('./pages/album'));
 const RankDetail = lazy(() => import('./pages/rankDetail'));
+const Search = lazy(() => import('./pages/search'));
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
@@ -17,6 +18,7 @@ const App = () => {
           <Switch>
             <Route path="/recommend/:id" component={Album} />
             <Route path="/rank/:id" component={RankDetail} />
+            <Route path="/search" component={Search} />
             <Route path="/" component={Home} />
           </Switch>
           {/* 底部播放器 */}

@@ -1,8 +1,11 @@
 import React from 'react';
-import { IconFont } from './../../components';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
+import IconFont from '../../components/IconFont';
 import './style.less';
 
-const TopBar = (props) => {
+const TopBar = props => {
   return (
     <div className="topbar-component">
       <div className="menu">
@@ -10,10 +13,21 @@ const TopBar = (props) => {
       </div>
       <p className="title">标题栏</p>
       <div className="search">
-        <IconFont name="iconsearch" size="24" color="#fff" />
+        <IconFont
+          name="iconsearch"
+          size="24"
+          color="#fff"
+          onClick={() => props.history.push('/search')}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default React.memo(TopBar);
+TopBar.prototype.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
+};
+
+export default React.memo(withRouter(TopBar));
