@@ -10,9 +10,9 @@ const RankDetail = lazy(() => import('./pages/rankDetail'));
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
 
-  return(
+  return (
     <AppContext.Provider value={[state, dispatch]}>
-      <HashRouter>
+      <BrowserRouter>
         <Suspense fallback={<LoadingV2 />}>
           <Switch>
             <Route path="/recommend/:id" component={Album} />
@@ -22,9 +22,9 @@ const App = () => {
           {/* 底部播放器 */}
           <Player />
         </Suspense>
-      </HashRouter>
+      </BrowserRouter>
     </AppContext.Provider>
   );
-}
+};
 
 export default App;
