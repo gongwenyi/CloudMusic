@@ -29,7 +29,16 @@ module.exports = merge(common, {
     contentBase: './dist',
     hot: true,
     host: '0.0.0.0',
-    historyApiFallback: true
+    historyApiFallback: {
+      rewrites: [
+        {
+          from: /^\/.*\.js$/,
+          to: function(context) {
+            return context.parsedUrl.pathname.replace(/\/[^\\/]+(\/.*\.js)$/,'$1')
+          }
+        }
+      ]
+    }
   },
   mode: 'development',
   plugins: [

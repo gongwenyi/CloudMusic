@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": true, // 允许动态路径配置
+    "baseUrl": "./",
+    "paths": {
+      "@hooks": ["src/hooks/index.js"],
+      "@hooks/*": ["src/hooks/*"],
+      "@components": ["src/components/index.js"],
+      "@components/*": ["src/components/*"],
+      "@config": ["src/config/index.js"],
+      "@config/*": ["src/config/*"],
+      "@iconfont": ["src/iconfont/index.js"],
+      "@iconfont/*": ["src/iconfont/*"],
+      "@pages": ["src/pages/index.js"],
+      "@pages/*": ["src/pages/*"],
+      "@reducer": ["src/reducer/index.js"],
+      "@reducer/*": ["src/reducer/*"],
+      "@utils": ["src/utils/index.js"],
+      "@utils/*": ["src/utils/*"]
+    },
+    "jsx": "preserve",
+    "module": "commonjs" // commonjs 规范默认导出index.js
+  },
+  "exclude": ["node_modules", "dist"]
+}
