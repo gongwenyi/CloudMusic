@@ -2,6 +2,7 @@ import IconFont from './IconFont';
 import Loading from './Loading';
 import LoadingV2 from './LoadingV2';
 import { Alert, Confirm, Prompt } from './Modal';
+import Tabs from './Tabs';
 import PageContainer from './PageContainer';
 import NavBar from './NavBar';
 import PlayCircleControl from './PlayCircleControl';
@@ -21,6 +22,7 @@ export {
   Alert,
   Confirm,
   Prompt,
+  Tabs,
   PageContainer,
   NavBar,
   PlayCircleControl,
