@@ -1,0 +1,29 @@
+@import './../../config/style.less';
+
+.singer-desc-page {
+  .item {
+    padding: 15px 15px 0;
+    .title {
+      position: relative;
+      padding-left: 6px;
+      font-size: 14px;
+      color: @tc333;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -8px;
+        width: 2px;
+        height: 16px;
+        background-color: @themeColor;
+        border-radius: 2px;
+      }
+    }
+    .desc {
+      padding-top: 10px;
+      font-size: 12px;
+      color: @tc999;
+    }
+  }
+}

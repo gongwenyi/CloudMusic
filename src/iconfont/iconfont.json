@@ -83,6 +83,20 @@
       "unicode_decimal": 59367
     },
     {
+      "icon_id": "4767006",
+      "name": "shrink",
+      "font_class": "shrink",
+      "unicode": "e7e9",
+      "unicode_decimal": 59369
+    },
+    {
+      "icon_id": "4767007",
+      "name": "arrawsalt",
+      "font_class": "arrawsalt",
+      "unicode": "e7ea",
+      "unicode_decimal": 59370
+    },
+    {
       "icon_id": "4767011",
       "name": "right",
       "font_class": "right",
@@ -109,6 +123,20 @@
       "font_class": "down",
       "unicode": "e7ee",
       "unicode_decimal": 59374
+    },
+    {
+      "icon_id": "4767015",
+      "name": "fullscreen",
+      "font_class": "fullscreen",
+      "unicode": "e7f7",
+      "unicode_decimal": 59383
+    },
+    {
+      "icon_id": "4767016",
+      "name": "fullscreen-exit",
+      "font_class": "fullscreen-exit",
+      "unicode": "e7f8",
+      "unicode_decimal": 59384
     },
     {
       "icon_id": "4767020",

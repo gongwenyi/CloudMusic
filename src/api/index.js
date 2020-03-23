@@ -2,7 +2,7 @@ import axios from './axios';
 
 const API = {
   // banner
-  banner() { 
+  banner() {
     return axios.get('banner');
   },
   // 推荐歌单
@@ -38,6 +38,37 @@ const API = {
   getLyric(id) {
     return axios.get('lyric', {
       id
+    });
+  },
+  // 获取歌手信息+热门歌曲
+  getArtists(id) {
+    return axios.get('artists', {
+      id
+    });
+  },
+  // 获取歌手描述
+  getArtistsDesc(id) {
+    return axios.get('artist/desc', {
+      id
+    });
+  },
+  // 获取歌手专辑
+  getArtistsAlbum(id, limit = 60) {
+    return axios.get('artist/album', {
+      id,
+      limit
+    });
+  },
+  // 获取歌手mv
+  getArtistsMv(id) {
+    return axios.get('artist/mv', {
+      id
+    });
+  },
+  // 获取mv播放地址
+  getMvDetail(mvid) {
+    return axios.get('mv/detail', {
+      mvid
     });
   }
 };

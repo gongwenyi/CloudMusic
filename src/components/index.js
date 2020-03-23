@@ -14,6 +14,7 @@ import ProgressLine from './ProgressLine';
 import Swiper from './Swiper';
 import Toast from './Toast';
 import TopBar from './TopBar';
+import MusicList from './MusicList';
 
 export {
   IconFont,
@@ -34,4 +35,5 @@ export {
   Swiper,
   Toast,
   TopBar,
-}
+  MusicList
+};

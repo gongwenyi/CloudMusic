@@ -2,7 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>网易云音乐</title>
     <style>
@@ -10,7 +13,8 @@
         margin: 0;
         padding: 0;
       }
-      html, body {
+      html,
+      body {
         height: 100%;
       }
       body {
@@ -23,12 +27,15 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <p>页面加载中</p>
+    </div>
   </body>
   <script>
-    (function (doc, win) {
+    (function(doc, win) {
       var docEl = doc.documentElement,
-          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+        resizeEvt =
+          'orientationchange' in window ? 'orientationchange' : 'resize';
 
       function recalc() {
         var clientWidth = docEl.clientWidth > 540 ? 540 : docEl.clientWidth; // 控制最大宽度为540px
@@ -39,8 +46,8 @@
         //根据设备可视区的宽度以及设备像素比动态改变fontSize值
         //如果计算dpr,在iphone6 plus等dpr较高的浏览器中布局会错乱
         // docEl.style.fontSize = (dpr / 2) * 100 * (clientWidth  / 375) + 'px';
-        docEl.style.fontSize = 100 * (clientWidth  / 375) + 'px';
-      };
+        docEl.style.fontSize = 100 * (clientWidth / 375) + 'px';
+      }
       recalc();
 
       if (!doc.addEventListener) return;
@@ -48,7 +55,7 @@
       if (doc.readyState === 'complete') {
         recalc();
       } else {
-          doc.addEventListener('DOMContentLoaded', recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
       }
     })(document, window);
   </script>

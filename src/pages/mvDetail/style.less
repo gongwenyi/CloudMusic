@@ -1,0 +1,102 @@
+@import './../../config/style.less';
+
+.mv-detail-page {
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 2.12rem;
+    background-color: #000;
+    overflow: hidden;
+  }
+  .video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .video-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 45px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #fff;
+    background-image: linear-gradient(
+      hsla(0, 0%, 33%, 0.4),
+      hsla(0, 0%, 100%, 0)
+    );
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all ease-in-out 0.4s;
+    &.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .video-controls {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 50px;
+    background-image: linear-gradient(
+      hsla(0, 0%, 100%, 0),
+      hsla(0, 0%, 33%, 0.4)
+    );
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all ease-in-out 0.4s;
+    &.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .play-btns {
+      padding: 0 5px;
+    }
+    .progress-line {
+      flex: 1;
+      padding: 0 12px 0 6px;
+    }
+    .video-quality {
+      position: relative;
+      width: 45px;
+      height: 26px;
+      display: flex;
+      .quality-list {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 100%;
+        display: flex;
+        flex-direction: column;
+        visibility: hidden;
+        opacity: 0;
+        transition: all ease-in-out 0.4s;
+        &.show {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+      .quality-current,
+      .item {
+        width: 100%;
+        height: 26px;
+        text-align: center;
+        line-height: 26px;
+        background-color: rgba(0, 0, 0, 0.3);
+        font-size: 10px;
+        color: #fff;
+      }
+    }
+    .full-screen-btns {
+      padding: 0 8px;
+    }
+  }
+}

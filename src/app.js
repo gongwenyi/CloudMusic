@@ -6,6 +6,9 @@ import reducer, { AppContext, initial } from './reducer';
 const Home = lazy(() => import('./pages/home'));
 const Album = lazy(() => import('./pages/album'));
 const RankDetail = lazy(() => import('./pages/rankDetail'));
+const SingerDetail = lazy(() => import('./pages/singerDetail'));
+const SingerDesc = lazy(() => import('./pages/singerDesc'));
+const MvDetail = lazy(() => import('./pages/mvDetail'));
 const Search = lazy(() => import('./pages/search'));
 
 const App = () => {
@@ -18,6 +21,9 @@ const App = () => {
           <Switch>
             <Route path="/recommend/:id" component={Album} />
             <Route path="/rank/:id" component={RankDetail} />
+            <Route path="/singer/:id" component={SingerDetail} />
+            <Route path="/singerDesc/:id" component={SingerDesc} />
+            <Route path="/mvDetail/:id" component={MvDetail} />
             <Route path="/search" component={Search} />
             <Route path="/" component={Home} />
           </Switch>
